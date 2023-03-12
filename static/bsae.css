@@ -81,6 +81,10 @@ code {
     display: none;
 }
 
+.invisiable {
+    visibility: hidden;
+}
+
 .flex-row {
     display: flex;
     align-items: center;

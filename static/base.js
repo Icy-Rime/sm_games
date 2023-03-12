@@ -60,7 +60,7 @@ export const alertDialog = (message) => {
 //          </div>
 //      </div>
 //  </div>
-export const withLoadingDialog = async (task) => {
+export const showLoadingDialog = () => {
     let dialog = document.querySelector("#dialog_loading");
     if (!dialog) {
         // create dialog
@@ -82,6 +82,15 @@ export const withLoadingDialog = async (task) => {
         document.body.append(dialog);
     }
     if (dialog.classList.contains("hidden")) dialog.classList.remove("hidden");
+}
+export const hideLoadingDialog = () => {
+    const dialog = document.querySelector("#dialog_loading");
+    if (dialog) {
+        if (!dialog.classList.contains("hidden")) dialog.classList.add("hidden");
+    }
+};
+export const withLoadingDialog = async (task) => {
+    showLoadingDialog();
     try {
         const result = task();
         if (result instanceof Promise) {
@@ -90,6 +99,6 @@ export const withLoadingDialog = async (task) => {
             return result;
         }
     } finally {
-        if (!dialog.classList.contains("hidden")) dialog.classList.add("hidden");
+        hideLoadingDialog();
     }
 };

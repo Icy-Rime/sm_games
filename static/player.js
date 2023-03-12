@@ -1,4 +1,4 @@
-import { alertDialog, withLoadingDialog } from "./base.js";
+import { alertDialog, showLoadingDialog, hideLoadingDialog, withLoadingDialog } from "./base.js";
 import { download, openLocalFile, readFile } from "./save.js";
 import { gameContext, isBusy, alertText, setEntryURL, setGameContext, nextGameContext, setAlertText } from "./store.js";
 
@@ -32,13 +32,9 @@ const initElements = () => {
         /** @param {boolean} isBusyValue */
         (isBusyValue) => {
             if (isBusyValue) {
-                document.querySelectorAll("#c_options button").forEach((elem) => {
-                    elem.classList.add("hidden");
-                });
+                showLoadingDialog();
             } else {
-                document.querySelectorAll("#c_options button").forEach((elem) => {
-                    elem.classList.remove("hidden");
-                });
+                hideLoadingDialog();
             }
         }
     );
