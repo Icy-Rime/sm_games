@@ -1,6 +1,18 @@
 import { serve } from "https://deno.land/std@0.178.0/http/server.ts";
 import { serveDir, serveFile } from "https://deno.land/std@0.178.0/http/file_server.ts";
 
+// games
+import dragons_cove1 from "./games/dragons_cove1.js";
+const mapAndExecuteGameModule = (moduleName, gameContext) => {
+    switch (moduleName) {
+        case "dragons_cove1":
+            return dragons_cove1(gameContext);
+
+        default:
+            throw new Error("Module Not Found.");
+    }
+};
+
 const responseJSON = (data) => {
     return new Response(JSON.stringify(data), {
         status: 200,
@@ -26,8 +38,7 @@ serve(async (req) => {
         const gamename = pathname.substring("/games/".length).replaceAll(".", "_");
         if (req.method == "POST") {
             try {
-                const gmodule = await import(`./games/${gamename}.js`);
-                const data = gmodule.default(await req.json());
+                const data = mapAndExecuteGameModule(gamename, await req.json());
                 if (data instanceof Promise) {
                     return responseJSON(await data);
                 } else {

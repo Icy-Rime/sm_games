@@ -68,7 +68,7 @@ const progressLoad = async () => {
         console.error(err);
         await alertDialog("加载失败!");
     }
-}
+};
 
 // main
 const init = async () => {

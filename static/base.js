@@ -82,7 +82,7 @@ export const showLoadingDialog = () => {
         document.body.append(dialog);
     }
     if (dialog.classList.contains("hidden")) dialog.classList.remove("hidden");
-}
+};
 export const hideLoadingDialog = () => {
     const dialog = document.querySelector("#dialog_loading");
     if (dialog) {
