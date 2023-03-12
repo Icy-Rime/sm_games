@@ -1,5 +1,6 @@
 import { alertDialog, withLoadingDialog } from "./base.js";
-import { gameContext, isBusy, alertText, setEntryURL, nextGameContext, setAlertText } from "./store.js";
+import { download, openLocalFile, readFile } from "./save.js";
+import { gameContext, isBusy, alertText, setEntryURL, setGameContext, nextGameContext, setAlertText } from "./store.js";
 
 const callbackActionButton = async (event) => {
     const action = Number.parseInt(event.target.dataset.action);
@@ -52,6 +53,27 @@ const initElements = () => {
     );
 };
 
+const progressSave = () => {
+    const dataText = JSON.stringify(gameContext.get());
+    const data = (new TextEncoder()).encode(dataText);
+    download(data, "game.sav");
+};
+
+const progressLoad = async () => {
+    const file = await openLocalFile(".sav");
+    const text = await readFile(file);
+    try {
+        const state = JSON.parse(text);
+        if ((!state.data) || (!state.message)) {
+            throw new Error("缺少必要数据!");
+        }
+        setGameContext(state);
+    } catch (err) {
+        console.error(err);
+        await alertDialog("加载失败!");
+    }
+}
+
 // main
 const init = async () => {
     // setup elements
@@ -65,6 +87,9 @@ const init = async () => {
     }
     setEntryURL(entryURL);
     console.log(entryURL);
+    // binding button callback
+    document.querySelector("#btn_save").addEventListener("click", progressSave);
+    document.querySelector("#btn_load").addEventListener("click", progressLoad);
     // start new game
     await nextGameContext(-1);
 };

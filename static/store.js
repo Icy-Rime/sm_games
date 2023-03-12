@@ -15,7 +15,7 @@ export const entryURL = atom("");
 export const alertText = atom("");
 
 // action
-export const setGameContexty = action(gameContext, "setGameContexty", (gameContext, newValue) => { gameContext.set(newValue); });
+export const setGameContext = action(gameContext, "setGameContext", (gameContext, newValue) => { gameContext.set(newValue); });
 export const setIsBusy = action(isBusy, "setIsBusy", (isBusy, newValue) => { isBusy.set(newValue); });
 export const setEntryURL = action(entryURL, "setEntryURL", (entryURL, newValue) => { entryURL.set(newValue); });
 export const setAlertText = action(alertText, "setAlertText", (alertText, newValue) => { alertText.set(newValue); });
@@ -33,7 +33,7 @@ export const nextGameContext = action(gameContext, "nextGameContext",
             };
             /** @type {import("../types/game_context.d.ts").GameContextRecive} */
             const resp = await request(entryURL.get(), sendData);
-            setGameContexty(resp);
+            setGameContext(resp);
         } catch (err) {
             console.error(err);
             setAlertText("Network Error.");

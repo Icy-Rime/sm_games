@@ -1,9 +1,17 @@
+#c_operations,
 #c_title,
 #c_message,
 #c_options,
 #c_tail {
     max-width: 800px;
     margin-top: 1rem;
+}
+
+#c_operations {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
 }
 
 #p_message {
